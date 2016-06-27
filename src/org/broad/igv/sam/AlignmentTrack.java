@@ -35,6 +35,7 @@ import com.iontorrent.views.FlowSignalDistributionPanel;
 import org.apache.log4j.Logger;
 import org.broad.igv.Globals;
 import org.broad.igv.PreferenceManager;
+
 import org.broad.igv.feature.FeatureUtils;
 import org.broad.igv.feature.Locus;
 import org.broad.igv.feature.Range;

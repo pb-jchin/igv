@@ -239,7 +239,18 @@ public class SVisClient {
     }
 
     public static void doSVisQuery(Alignment aln) {
+        
+        String chr = aln.getChr();
+        int start = aln.getAlignmentStart();
+        int end = aln.getAlignmentEnd();
 
+        start -= 10000;
+        end += 10000;
+        Genome genome = GenomeManager.getInstance().getCurrentGenome();
+        final byte[] seqBytes = genome.getSequence(chr, start, end);
+        String userSeq = new String(seqBytes);
+
+        //f.getChr(), f.getStart(), f.getEnd()
         MessageUtils.showMessage("<html>doSVisQuery called with aln" + 
                                  "<br> chr: "+ aln.getChr() + 
                                  "<br> start: "+ aln.getAlignmentStart() + 
@@ -249,12 +260,13 @@ public class SVisClient {
                                  "</html>");
 
         Map<String, String> params = new HashMap();
-        params.put("chr", aln.getChr());
-        params.put("start", String.valueOf(aln.getAlignmentStart()));
-        params.put("end", String.valueOf(aln.getAlignmentEnd()));
+        params.put("chr", chr);
+        params.put("start", String.valueOf(start));
+        params.put("end", String.valueOf(end));
         params.put("strand", String.valueOf(aln.getReadStrand()));
         params.put("read_name", aln.getReadName());
         params.put("read_seq", aln.getReadSequence());
+        params.put("ref_seq", userSeq);
     
 
         String $url = "http://localhost:6502";
