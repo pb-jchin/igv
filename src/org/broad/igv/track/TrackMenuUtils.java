@@ -56,6 +56,7 @@ import org.broad.igv.util.LongRunningTask;
 import org.broad.igv.util.ResourceLocator;
 import org.broad.igv.util.StringUtils;
 import org.broad.igv.util.blat.BlatClient;
+import org.broad.igv.util.SVis.SVisClient;
 import org.broad.igv.util.collections.CollUtils;
 import org.broad.igv.util.stats.KMPlotFrame;
 import htsjdk.tribble.Feature;
@@ -485,6 +486,7 @@ public class TrackMenuUtils {
                 featurePopupMenu.add(getCopyDetailsItem(f, te));
                 featurePopupMenu.add(getCopySequenceItem(f));
                 featurePopupMenu.add(getBlatItem(f));
+                featurePopupMenu.add(getSVisItem(f));
 
 
             }
@@ -1358,6 +1360,16 @@ public class TrackMenuUtils {
         return item;
     }
 
+    public static JMenuItem getSVisItem(final Feature f) {
+        JMenuItem item = new JMenuItem("SV Vis");
+        item.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent evt) {
+                SVisClient.doSVisQuery(f.getChr(), f.getStart(), f.getEnd());
+            }
+        });
+        return item;
+    }
 
     /**
      * Return a representative track height to use as the default.  For now
