@@ -239,6 +239,7 @@ public class SVisClient {
     }
 
     public static void doSVisQuery(Alignment aln) {
+<<<<<<< HEAD
         
         String chr = aln.getChr();
         int start = aln.getAlignmentStart();
@@ -251,6 +252,9 @@ public class SVisClient {
         String userSeq = new String(seqBytes);
 
         //f.getChr(), f.getStart(), f.getEnd()
+=======
+
+>>>>>>> 23f618ffbdfd3cde002ff771ce601e7026889265
         MessageUtils.showMessage("<html>doSVisQuery called with aln" + 
                                  "<br> chr: "+ aln.getChr() + 
                                  "<br> start: "+ aln.getAlignmentStart() + 
@@ -260,6 +264,7 @@ public class SVisClient {
                                  "</html>");
 
         Map<String, String> params = new HashMap();
+<<<<<<< HEAD
         params.put("chr", chr);
         params.put("start", String.valueOf(start));
         params.put("end", String.valueOf(end));
@@ -267,6 +272,14 @@ public class SVisClient {
         params.put("read_name", aln.getReadName());
         params.put("read_seq", aln.getReadSequence());
         params.put("ref_seq", userSeq);
+=======
+        params.put("chr", aln.getChr());
+        params.put("start", String.valueOf(aln.getAlignmentStart()));
+        params.put("end", String.valueOf(aln.getAlignmentEnd()));
+        params.put("strand", String.valueOf(aln.getReadStrand()));
+        params.put("read_name", aln.getReadName());
+        params.put("read_seq", aln.getReadSequence());
+>>>>>>> 23f618ffbdfd3cde002ff771ce601e7026889265
     
 
         String $url = "http://localhost:6502";

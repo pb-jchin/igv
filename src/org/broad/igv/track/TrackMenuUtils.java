@@ -484,9 +484,18 @@ public class TrackMenuUtils {
                     }
                 }
 
+<<<<<<< HEAD
                 featurePopupMenu.add(getCopySequenceItem(sequenceFeature));
                 featurePopupMenu.add(getBlatItem(sequenceFeature));
                 featurePopupMenu.add(getSVisItem(sequenceFeature));
+=======
+
+                featurePopupMenu.add(getCopyDetailsItem(f, te));
+                featurePopupMenu.add(getCopySequenceItem(f));
+                featurePopupMenu.add(getBlatItem(f));
+                featurePopupMenu.add(getSVisItem(f));
+
+>>>>>>> 23f618ffbdfd3cde002ff771ce601e7026889265
 
             }
             if (Globals.isDevelopment()) {
