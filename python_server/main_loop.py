@@ -16,13 +16,6 @@ enable_pretty_logging()
 
 rmap = dict(zip("ACGTN","TGCAN"))
 
-<<<<<<< HEAD
-=======
-ref_seq_db = {}
-fasta_file = FastaReader("cns_p_ctg.fasta")
-for rec in fasta_file:
-	ref_seq_db[rec.name] = rec.sequence
->>>>>>> 23f618ffbdfd3cde002ff771ce601e7026889265
 
 def get_kmer_matches(seq1, seq0):
     K = 8
@@ -54,25 +47,14 @@ class Mode1(tornado.web.RequestHandler):
         strand = self.get_argument("strand","NA")
         read_name = self.get_argument("read_name", "NA")
         read_seq = self.get_argument("read_seq", "NA")
-<<<<<<< HEAD
         ref_seq = self.get_argument("ref_seq", "NA")
 
         
-
-=======
->>>>>>> 23f618ffbdfd3cde002ff771ce601e7026889265
 
         #the sequnce from IGV is always the same direction as the reference  
         #if strand == "NEGATIVE":
         #	read_seq = "".join( [rmap[c] for c in read_seq[::-1]] )
 
-<<<<<<< HEAD
-=======
-        start -= 10000
-        if start < 0: start = 0
-        end += 10000
-    	ref_seq = ref_seq_db[chr_][start:end]
->>>>>>> 23f618ffbdfd3cde002ff771ce601e7026889265
     	x, y, ar = get_kmer_matches(read_seq, ref_seq)
         y = np.array(y) + start
         plt.figure()
