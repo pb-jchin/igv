@@ -465,6 +465,9 @@ public class TrackMenuUtils {
         if (tracks.size() == 1) {
             Track t = tracks.iterator().next();
             Feature f = t.getFeatureAtMousePosition(te);
+            ReferenceFrame frame=te.getFrame();
+            Range r = frame.getCurrentRange();
+            String featureName = "";
             if (f != null) {
                 featurePopupMenu.addSeparator();
                 featurePopupMenu.add(getCopyDetailsItem(f, te));
@@ -472,6 +475,7 @@ public class TrackMenuUtils {
                 // If we are over an exon, copy its sequence instead of the entire feature.
                 Feature sequenceFeature = f;
                 if (sequenceFeature instanceof IGVFeature) {
+                    featureName = ((IGVFeature) sequenceFeature).getName();
                     double position = te.getChromosomePosition();
                     Collection<Exon> exons = ((IGVFeature) sequenceFeature).getExons();
                     if (exons != null) {
@@ -486,7 +490,7 @@ public class TrackMenuUtils {
 
                 featurePopupMenu.add(getCopySequenceItem(sequenceFeature));
                 featurePopupMenu.add(getBlatItem(sequenceFeature));
-                featurePopupMenu.add(getSVisItem(sequenceFeature));
+                featurePopupMenu.add(getSVisItem(featureName, sequenceFeature, r));
             }
             if (Globals.isDevelopment()) {
                 featurePopupMenu.addSeparator();
@@ -1365,12 +1369,12 @@ public class TrackMenuUtils {
         return item;
     }
 
-    public static JMenuItem getSVisItem(final Feature f) {
+    public static JMenuItem getSVisItem(final String featureName, final Feature f, final Range r) {
         JMenuItem item = new JMenuItem("SV Vis");
         item.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent evt) {
-                SVisClient.doSVisQuery(f.getChr(), f.getStart(), f.getEnd());
+                SVisClient.doSVisQuery(featureName, f.getStart(), f.getEnd(), r.getChr(), r.getStart(), r.getEnd());
             }
         });
         return item;
