@@ -67,7 +67,7 @@ import org.broad.igv.util.ResourceLocator;
 import org.broad.igv.util.StringUtils;
 import org.broad.igv.util.Utilities;
 import org.broad.igv.util.blat.BlatClient;
-import org.broad.igv.util.SVis.SVisClient;
+import org.broad.igv.util.extview.ExtendViewClient;
 import org.broad.igv.util.collections.CollUtils;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -1306,8 +1306,7 @@ public class AlignmentTrack extends AbstractTrack implements AlignmentTrackEvent
             addSeparator();
             addCopySequenceItem(e);
             addBlatItem(e);
-
-            addSVisItem(e);
+            addExtViewItem(e);
             addConsensusSequence(e);
 
             boolean showSashimi = true;//Globals.isDevelopment();
@@ -2070,9 +2069,9 @@ public class AlignmentTrack extends AbstractTrack implements AlignmentTrackEvent
 
         }
 
-        public void addSVisItem(final TrackClickEvent te) {
+        public void addExtViewItem(final TrackClickEvent te) {
             // Change track height by attribute
-            final JMenuItem item = new JMenuItem("SVis");
+            final JMenuItem item = new JMenuItem("ExtView");
             add(item);
 
             final Alignment alignment = getAlignment(te);
@@ -2090,7 +2089,7 @@ public class AlignmentTrack extends AbstractTrack implements AlignmentTrackEvent
 
             item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent aEvt) {
-                    SVisClient.doSVisQuery(alignment);
+                    ExtendViewClient.postExtendView(alignment);
                 }
             });
 
