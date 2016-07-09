@@ -222,20 +222,28 @@ public class SVisClient {
         return records;
     }
 
-    public static void doSVisQuery(final String chr, final int start, final int end) {
+    public static void doSVisQuery(final String fName, final int start, final int end, 
+                                   final String r_chr, final int r_start, final int r_end) {
 
-        MessageUtils.showMessage("chr :" + chr +" start:" + start + " end:" + end);
-
-        if((end - start) > 8000) {
-            MessageUtils.showMessage("BLAT searches are limited to 8kb.  Please try a shorter sequence.");
-            return;
+        MessageUtils.showMessage("fName :" + fName +" start:" + start + " end:" + end + "<br>" + 
+                                 "chr :" + r_chr +" start:" + r_start + " end:" + r_end);
+        Map<String, String> params = new HashMap();
+        params.put("name", fName); 
+        params.put("start", String.valueOf(start));
+        params.put("end", String.valueOf(end));
+        params.put("chr", r_chr);
+        params.put("r_start", String.valueOf(r_start));
+        params.put("r_end", String.valueOf(r_end));
+        
+        String $url = "http://localhost:6502";
+        String urlString = ($url + "/mode2/");
+        try {
+            String result = HttpUtils.getInstance().doPost(new URL(urlString), params);
+            MessageUtils.showMessage("results:" + result);
+        } catch (IOException e1) {
+            MessageUtils.showErrorMessage("Error running SVis mode2", e1);
         }
 
-        Genome genome = GenomeManager.getInstance().getCurrentGenome();
-        final byte[] seqBytes = genome.getSequence(chr, start, end);
-        String userSeq = new String(seqBytes);
-
-        doSVisQuery(userSeq);
     }
 
     public static void doSVisQuery(Alignment aln) {
@@ -250,7 +258,7 @@ public class SVisClient {
         final byte[] seqBytes = genome.getSequence(chr, start, end);
         String userSeq = new String(seqBytes);
 
-
+        /*        
         MessageUtils.showMessage("<html>doSVisQuery called with aln" + 
                                  "<br> chr: "+ aln.getChr() + 
                                  "<br> start: "+ aln.getAlignmentStart() + 
@@ -258,6 +266,7 @@ public class SVisClient {
                                  "<br> strand: " + aln.getReadStrand() +
                                  "<br> readName: " + aln.getReadName() +
                                  "</html>");
+        */
 
         Map<String, String> params = new HashMap();
 
@@ -274,7 +283,7 @@ public class SVisClient {
         String urlString = ($url + "/mode1/");
         try {
             String result = HttpUtils.getInstance().doPost(new URL(urlString), params);
-            MessageUtils.showMessage("results:" + result);
+            //MessageUtils.showMessage("results:" + result);
         } catch (IOException e1) {
             MessageUtils.showErrorMessage("Error running SVis mode1", e1);
         }
